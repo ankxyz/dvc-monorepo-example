@@ -23,7 +23,7 @@ stages:
       md5: 4224576f0267bf88902f87f0f6200967
       size: 2757
   build_model_a:
-    cmd: cd model_a && dvc exp run
+    cmd: cd model_a && dvc repro
     deps:
     - path: data/raw/iris.csv
       hash: md5
@@ -32,10 +32,10 @@ stages:
     outs:
     - path: model_a/models/model-a.joblib
       hash: md5
-      md5: ca8525d73391cd993a6cdd5cbcfc10bf
+      md5: 7154507cc8f4093f45b430c0bb7c0377
       size: 4023
   build_model_b:
-    cmd: cd model_b && dvc exp run
+    cmd: cd model_b && dvc repro
     deps:
     - path: data/raw/iris.csv
       hash: md5
@@ -44,10 +44,10 @@ stages:
     outs:
     - path: model_b/models/model-b.joblib
       hash: md5
-      md5: d4834868bad0d7cf98b53403de304aaf
+      md5: 41fb8502832f1b887119127a4856dcfc
       size: 7743
   build_model_c:
-    cmd: cd model_c && dvc exp run
+    cmd: cd model_c && dvc repro
     deps:
     - path: data/raw/iris.csv
       hash: md5
@@ -55,16 +55,16 @@ stages:
       size: 2757
     - path: model_a/models/model-a.joblib
       hash: md5
-      md5: ca8525d73391cd993a6cdd5cbcfc10bf
+      md5: 7154507cc8f4093f45b430c0bb7c0377
       size: 4023
     - path: model_b/models/model-b.joblib
       hash: md5
-      md5: d4834868bad0d7cf98b53403de304aaf
+      md5: 41fb8502832f1b887119127a4856dcfc
       size: 7743
     outs:
     - path: model_c/models/model-c.joblib
       hash: md5
-      md5: eac044ce540b70d47de6b1e8376822e8
+      md5: e758af4e703bc54473656cc061295808
       size: 3747
   build_metrics_report:
     cmd: python src/pipelines/build_metrics_report.py --config=params.yaml

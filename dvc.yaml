@@ -14,7 +14,7 @@ stages:
       - ${base.dir_data_raw}/${data_load.dataset_csv}
   
   build_model_a: 
-    cmd: cd model_a && dvc exp run
+    cmd: cd model_a && dvc repro
     deps:
       - ${base.dir_data_raw}/${data_load.dataset_csv}
     outs: 
@@ -22,7 +22,7 @@ stages:
   
       
   build_model_b: 
-    cmd: cd model_b && dvc exp run
+    cmd: cd model_b && dvc repro
     deps:
       - ${base.dir_data_raw}/${data_load.dataset_csv}
     outs: 
@@ -30,7 +30,7 @@ stages:
   
 
   build_model_c: 
-    cmd: cd model_c && dvc exp run
+    cmd: cd model_c && dvc repro
     deps:
       - ${base.dir_data_raw}/${data_load.dataset_csv}
       - model_a/${dir_models}/model-a.joblib

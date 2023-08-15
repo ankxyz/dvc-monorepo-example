@@ -9,11 +9,11 @@ stages:
       size: 2757
     - path: ../model_a/models/model-a.joblib
       hash: md5
-      md5: ca8525d73391cd993a6cdd5cbcfc10bf
+      md5: 7154507cc8f4093f45b430c0bb7c0377
       size: 4023
     - path: ../model_b/models/model-b.joblib
       hash: md5
-      md5: d4834868bad0d7cf98b53403de304aaf
+      md5: 41fb8502832f1b887119127a4856dcfc
       size: 7743
     - path: src/pipelines/featurize.py
       hash: md5
@@ -110,7 +110,7 @@ stages:
     outs:
     - path: models/model-c.joblib
       hash: md5
-      md5: eac044ce540b70d47de6b1e8376822e8
+      md5: e758af4e703bc54473656cc061295808
       size: 3747
   evaluate:
     cmd: python src/pipelines/evaluate.py --config=params.yaml
@@ -121,7 +121,7 @@ stages:
       size: 2336
     - path: models/model-c.joblib
       hash: md5
-      md5: eac044ce540b70d47de6b1e8376822e8
+      md5: e758af4e703bc54473656cc061295808
       size: 3747
     - path: src/pipelines/evaluate.py
       hash: md5

@@ -100,7 +100,7 @@ stages:
     outs:
     - path: models/model-a.joblib
       hash: md5
-      md5: ca8525d73391cd993a6cdd5cbcfc10bf
+      md5: 7154507cc8f4093f45b430c0bb7c0377
       size: 4023
   evaluate:
     cmd: python src/pipelines/evaluate.py --config=params.yaml
@@ -111,7 +111,7 @@ stages:
       size: 2140
     - path: models/model-a.joblib
       hash: md5
-      md5: ca8525d73391cd993a6cdd5cbcfc10bf
+      md5: 7154507cc8f4093f45b430c0bb7c0377
       size: 4023
     - path: src/pipelines/evaluate.py
       hash: md5
