@@ -1,0 +1,4 @@
+!.gitignore
+!*.dvc
+/model-a.joblib
+/model-b.joblib

@@ -1,0 +1,88 @@
+schema: '2.0'
+stages:
+  data_load:
+    cmd: python src/pipelines/data_load.py --config=params.yaml
+    deps:
+    - path: src/pipelines/data_load.py
+      hash: md5
+      md5: f7525a17e0cc70f244df3ea44996b2ae
+      size: 771
+    params:
+      params.yaml:
+        base:
+          dir_data_raw: data/raw
+          dir_data_processed: data/processed
+          dir_models: models
+          dir_reports: reports
+          random_state: 42
+        data_load:
+          dataset_csv: iris.csv
+    outs:
+    - path: data/raw/iris.csv
+      hash: md5
+      md5: 4224576f0267bf88902f87f0f6200967
+      size: 2757
+  build_model_a:
+    cmd: cd model_a && dvc exp run
+    deps:
+    - path: data/raw/iris.csv
+      hash: md5
+      md5: 4224576f0267bf88902f87f0f6200967
+      size: 2757
+    outs:
+    - path: model_a/models/model-a.joblib
+      hash: md5
+      md5: ca8525d73391cd993a6cdd5cbcfc10bf
+      size: 4023
+  build_model_b:
+    cmd: cd model_b && dvc exp run
+    deps:
+    - path: data/raw/iris.csv
+      hash: md5
+      md5: 4224576f0267bf88902f87f0f6200967
+      size: 2757
+    outs:
+    - path: model_b/models/model-b.joblib
+      hash: md5
+      md5: d4834868bad0d7cf98b53403de304aaf
+      size: 7743
+  build_model_c:
+    cmd: cd model_c && dvc exp run
+    deps:
+    - path: data/raw/iris.csv
+      hash: md5
+      md5: 4224576f0267bf88902f87f0f6200967
+      size: 2757
+    - path: model_a/models/model-a.joblib
+      hash: md5
+      md5: ca8525d73391cd993a6cdd5cbcfc10bf
+      size: 4023
+    - path: model_b/models/model-b.joblib
+      hash: md5
+      md5: d4834868bad0d7cf98b53403de304aaf
+      size: 7743
+    outs:
+    - path: model_c/models/model-c.joblib
+      hash: md5
+      md5: eac044ce540b70d47de6b1e8376822e8
+      size: 3747
+  build_metrics_report:
+    cmd: python src/pipelines/build_metrics_report.py --config=params.yaml
+    deps:
+    - path: model_a/reports/model-a-metrics.json
+      hash: md5
+      md5: e01c836b389fd376ae3f6fe7f19f3cdd
+      size: 31
+    - path: model_b/reports/model-b-metrics.json
+      hash: md5
+      md5: 3329ba1a6b18407f725a1e25a5500560
+      size: 17
+    - path: model_c/reports/model-c-metrics.json
+      hash: md5
+      md5: 3329ba1a6b18407f725a1e25a5500560
+      size: 17
+    outs:
+    - path: reports/all-metrics.json
+      hash: md5
+      md5: 2044d0396cd6a25b0ac8919936d134b6
+      size: 76

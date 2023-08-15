@@ -1,0 +1,8 @@
+!.gitignore
+!*.dvc
+/model-b-confusion_matrix.png
+/model-b-metrics.json
+/model-b-classess.csv
+/model-c-confusion_matrix.png
+/model-c-metrics.json
+/model-c-classess.csv

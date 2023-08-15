@@ -1,0 +1,50 @@
+vars:
+  - dir_models: models
+
+stages:
+
+  data_load:
+    cmd: python src/pipelines/data_load.py --config=params.yaml
+    deps:
+      - src/pipelines/data_load.py
+    params:
+      - base
+      - data_load
+    outs:
+      - ${base.dir_data_raw}/${data_load.dataset_csv}
+  
+  build_model_a: 
+    cmd: cd model_a && dvc exp run
+    deps:
+      - ${base.dir_data_raw}/${data_load.dataset_csv}
+    outs: 
+      - model_a/${dir_models}/model-a.joblib
+  
+      
+  build_model_b: 
+    cmd: cd model_b && dvc exp run
+    deps:
+      - ${base.dir_data_raw}/${data_load.dataset_csv}
+    outs: 
+      - model_b/${dir_models}/model-b.joblib
+  
+
+  build_model_c: 
+    cmd: cd model_c && dvc exp run
+    deps:
+      - ${base.dir_data_raw}/${data_load.dataset_csv}
+      - model_a/${dir_models}/model-a.joblib
+      - model_b/${dir_models}/model-b.joblib
+    outs: 
+      - model_c/${dir_models}/model-c.joblib
+
+
+  build_metrics_report:
+    cmd: python src/pipelines/build_metrics_report.py --config=params.yaml
+    deps:
+      - model_a/${base.dir_reports}/${model_a.metrics_file}
+      - model_b/${base.dir_reports}/${model_b.metrics_file}
+      - model_c/${base.dir_reports}/${model_c.metrics_file}
+    metrics:
+    - ${base.dir_reports}/${build_metrics_report.metrics_file}:
+        cache: false
